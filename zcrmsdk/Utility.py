@@ -176,13 +176,13 @@ class ZCRMConfigUtil(object):
     @staticmethod
     def initialize(isToInitializeOAuth):
         import os
-        try:
-            from .Path import PathIdentifier
-        except ImportError:
-            from Path import PathIdentifier
-        resources_path = os.path.join(PathIdentifier.get_client_library_root(),'resources','configuration.properties')
-        filePointer=open(resources_path,"r")
-        ZCRMConfigUtil.config_prop_dict=CommonUtil.get_file_content_as_dictionary(filePointer)
+        ZCRMConfigUtil.config_prop_dict={
+            'apiBaseUrl': os.environ['API_BASE_URL'],
+            'apiVersion': os.environ['API_VERSION'],
+            'sandbox': os.environ['SANDBOX'],
+            'applicationLogFilePath': os.environ['APPLICATION_LOG_FILE_PATH'],
+            'currentUserEmail': os.environ['CURRENT_USER_EMAIL']
+        }
         if(isToInitializeOAuth):
             ZohoOAuth.initialize()
     @staticmethod
