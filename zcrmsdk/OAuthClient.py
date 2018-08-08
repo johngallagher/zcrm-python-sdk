@@ -10,13 +10,12 @@ except ImportError:
     from OAuthUtility import OAuthLogger,ZohoOAuthConstants,ZohoOAuthException,ZohoOAuthHTTPConnector,ZohoOAuthParams
     from Persistence import ZohoOAuthPersistenceHandler,ZohoOAuthPersistenceFileHandler
 import logging
+import os
 class ZohoOAuth(object):
     '''
     This class is to load oauth configurations and provide OAuth request URIs
     '''
     configProperties={}
-    #iamURL='https://accounts.zoho.com'
-    
     def __init__(self):
         '''
         Constructor
@@ -24,16 +23,14 @@ class ZohoOAuth(object):
     @staticmethod
     def initialize():
         try:
-            try:
-                from .Path import PathIdentifier
-            except ImportError:
-                from Path import PathIdentifier
-            import os
-            #dirSplit=os.path.split(PathIdentifier.get_client_library_root())
-            #resources_path = os.path.join(dirSplit[0],'resources','oauth_configuration.properties')
-            resources_path = os.path.join(PathIdentifier.get_client_library_root(),'resources','oauth_configuration.properties')
-            filePointer=open(resources_path,"r")
-            ZohoOAuth.configProperties=ZohoOAuth.get_file_content_as_dictionary(filePointer)
+            ZohoOAuth.configProperties={
+                'client_id': os.environ['CLIENT_ID'],
+                'client_secret': os.environ['CLIENT_SECRET'],
+                'redirect_uri': os.environ['REDIRECT_URI'],
+                'accounts_url': os.environ['ACCOUNTS_URL'],
+                'token_persistence_path': os.environ['TOKEN_PERSISTENCE_PATH'],
+                'access_type': os.environ['ACCESS_TYPE']
+            }
             oAuthParams=ZohoOAuthParams.get_instance(ZohoOAuth.configProperties[ZohoOAuthConstants.CLIENT_ID], ZohoOAuth.configProperties[ZohoOAuthConstants.CLIENT_SECRET], ZohoOAuth.configProperties[ZohoOAuthConstants.REDIRECT_URL])
             ZohoOAuthClient.get_instance(oAuthParams)
         except Exception as ex:
