@@ -50,7 +50,7 @@ setup(
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     packages=find_packages(),
-    package_data={'zcrmsdk': ['resources/*.properties']},
+    package_data={'zcrmsdk': []},
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
