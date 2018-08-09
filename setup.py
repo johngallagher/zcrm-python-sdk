@@ -3,10 +3,9 @@ Created on Aug 18, 2017
 
 @author: sumanth-3058
 '''
-from setuptools import setup, find_packages
-# To use a consistent encoding
 from codecs import open
 from os import path
+from setuptools import setup
 
 here = path.abspath(path.dirname(__file__))
 
@@ -49,8 +48,7 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(),
-    package_data={'zcrmsdk': []},
+    packages=['zcrmsdk']
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
